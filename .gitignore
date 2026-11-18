@@ -27,6 +27,11 @@ yarn-error.log*
 
 # OS
 .DS_Store
+
+# Removed from repo tracking (kept locally)
+CAVR-Dyna-Presentation.pptx
+CAVR-Dyna-Project-Report.docx
+CAVR-Dyna-Project-Report.pdf
 Thumbs.db
 desktop.ini
 
