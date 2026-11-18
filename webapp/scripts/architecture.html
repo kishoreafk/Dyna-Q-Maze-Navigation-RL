@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Times New Roman', Georgia, serif;
+    background: #ffffff;
+    color: #111;
+    width: 1180px;
+    padding: 28px 30px;
+  }
+  .canvas { display: flex; flex-direction: column; gap: 18px; }
+  .layer { display: flex; align-items: stretch; gap: 14px; }
+  .layer-tag {
+    flex: 0 0 118px;
+    display: flex; flex-direction: column; justify-content: center;
+    border: 1.4px solid #111; padding: 10px 12px;
+    font-size: 13.5px; letter-spacing: 0.06em; font-weight: bold;
+    text-transform: uppercase; text-align: left; background: #f2f2f2;
+  }
+  .layer-tag small { font-weight: normal; font-size: 10.5px; letter-spacing: 0; text-transform: none; color: #333; margin-top: 4px; }
+  .boxes { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; align-content: stretch; }
+  .box {
+    flex: 1 1 150px; border: 1.2px solid #444; background: #fff;
+    padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; min-height: 64px;
+  }
+  .box b { font-size: 14px; font-weight: bold; display: block; margin-bottom: 3px; }
+  .box span { font-size: 11.5px; color: #333; line-height: 1.35; }
+  .arrow-row { display: flex; justify-content: center; height: 26px; align-items: center; }
+  .arrow {
+    width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent;
+    border-top: 11px solid #111; position: relative;
+  }
+  .arrow::before {
+    content: ""; position: absolute; left: -1.2px; top: -26px; width: 2.4px; height: 22px; background: #111;
+  }
+  .duo { display: flex; gap: 18px; }
+  .duo .box b { font-size: 13.5px; }
+  .loops { display: flex; gap: 12px; margin-top: 2px; }
+  .loop {
+    flex: 1; border: 1.2px dashed #555; padding: 8px 12px; font-size: 11.5px; color: #222;
+    background: #fafafa; line-height: 1.4;
+  }
+  .loop b { font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="layer">
+    <div class="layer-tag">Environment<small>private-map grid world</small></div>
+    <div class="boxes">
+      <div class="box"><b>9×9 procedural maze</b><span>DFS spanning tree + braiding (braid 0.15); train/val split by maze identity, SHA256 manifest</span></div>
+      <div class="box"><b>Slip dynamics ρ</b><span>intended transition w.p. 1−ρ; uniform random passable move w.p. ρ</span></div>
+      <div class="box"><b>Change scenarios</b><span>blocking / shortcut / static events on an evaluator schedule (hidden from the agent)</span></div>
+      <div class="box"><b>Leak guard</b><span>change schedule and true walls invisible to all agents; only (s, a, r, s′) exposed</span></div>
+    </div>
+  </div>
+  <div class="arrow-row"><div class="arrow"></div></div>
+  <div class="layer">
+    <div class="layer-tag">Models<small>learned world model</small></div>
+    <div class="boxes">
+      <div class="box"><b>Categorical Dirichlet model</b><span>per-(s,a) outcome counts → expected transitions and rewards</span></div>
+      <div class="box"><b>Factored edge-belief map</b><span>per-edge log-odds of "open" (Bayes update under slip)</span></div>
+      <div class="box"><b>Two-level CUSUM detector</b><span>frozen pre-update prediction; per-pair alarms + global alarm state</span></div>
+    </div>
+  </div>
+  <div class="arrow-row"><div class="arrow"></div></div>
+  <div class="layer">
+    <div class="layer-tag">CAVR agent<small>decision & repair</small></div>
+    <div class="boxes">
+      <div class="box"><b>Repair on alarm</b><span>local forgetting of the affected model region (epoch bump)</span></div>
+      <div class="box"><b>Counterfactual backups</b><span>goal-conditioned expected value of repair, prioritized push θ_push</span></div>
+      <div class="box"><b>Probe schedule</b><span>real-action information probes when θ_probe exceeded, min gap 8 steps</span></div>
+      <div class="box"><b>Exploration floor</b><span>nonzero ε-floor keeps hidden shortcuts discoverable</span></div>
+    </div>
+  </div>
+  <div class="arrow-row"><div class="arrow"></div></div>
+  <div class="layer">
+    <div class="layer-tag">Planning<small>value-of-computation</small></div>
+    <div class="boxes">
+      <div class="box"><b>Epoch-versioned heap</b><span>stale entries invalidated by epoch; predecessors maintained</span></div>
+      <div class="box"><b>VoC budget arbiter</b><span>backup budget B ∈ {0, 8, 16, 32, 64} chosen from uncertainty signals</span></div>
+      <div class="box"><b>D* Lite retest</b><span>incremental replanning on believed map every 50 steps</span></div>
+    </div>
+  </div>
+  <div class="arrow-row"><div class="arrow"></div></div>
+  <div class="duo">
+    <div class="layer-tag" style="flex-basis:118px">Evaluation<small>offline harness</small></div>
+    <div class="boxes" style="flex-direction: column;">
+      <div class="loops">
+        <div class="loop"><b>Metrics:</b> success, post-change success, median adaptation delay (censoring-aware), FAR/1000, detection delay, AULC, regret, backups/step, plan wall-clock.</div>
+        <div class="loop"><b>Statistics:</b> paired bootstrap CIs across map/seed pairs; per-condition summary tables (8 conditions × 10 methods, 640 runs).</div>
+        <div class="loop"><b>Verification:</b> held-out V1–V4 gates (stationarity, adaptation, model sanity, determinism) on unseen schedules.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

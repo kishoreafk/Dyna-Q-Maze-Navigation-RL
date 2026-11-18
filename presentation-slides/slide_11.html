@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Compute vs adaptation — Pareto view</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="global.css">
+<style>
+  .role-tag{
+    display:inline-block; padding:1px 8px 2px; margin-left:10px;
+    font-family:var(--font-num); font-size:9px; letter-spacing:0.14em;
+    color:var(--muted); border:1px solid var(--line-strong);
+    border-radius:999px; vertical-align:2px; white-space:nowrap;
+  }
+  .role-tag.accent{ color:var(--accent); border-color:rgba(45,212,167,0.45); background:rgba(45,212,167,0.10); }
+  .role-tag.amber{ color:var(--accent-amber); border-color:rgba(245,183,74,0.45); background:rgba(245,183,74,0.08); }
+  .row-val{ font-family:var(--font-num); font-variant-numeric:tabular-nums; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="slide" style="padding:56px 64px 48px; display:flex; flex-direction:column;">
+
+  <!-- header -->
+  <header>
+    <div class="kicker">TRADE-OFF</div>
+    <h1 style="font-family:var(--font-heading); font-size:34px; font-weight:600; letter-spacing:-0.015em; line-height:1.15; margin:10px 0 0; color:var(--primary);">Compute buys adaptation — <span class="accent">the Pareto view</span></h1>
+  </header>
+
+  <!-- content -->
+  <div style="flex:1; display:flex; gap:28px; margin-top:24px; min-height:0;">
+
+    <!-- LEFT: pareto figure -->
+    <div style="width:560px; display:flex; flex-direction:column; justify-content:center; min-width:0;">
+      <div class="figframe">
+        <img src="fig_pareto.png" alt="Adaptation delay vs planning wall-clock, log scale" style="display:block; width:100%; height:auto;">
+      </div>
+      <p style="margin:12px 4px 0; font-size:11.5px; line-height:1.6; color:var(--muted);">
+        Blocking, ρ=0.3: median post-change adaptation delay vs mean planning wall-clock per run (log scale).
+      </p>
+    </div>
+
+    <!-- RIGHT: stat rows + reading -->
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:12px; min-width:0;">
+
+      <div class="card" style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; border-left:2px solid var(--accent);">
+        <span class="num" style="font-size:15.5px; font-weight:600; color:var(--accent);">cavr<span class="role-tag accent">OURS</span></span>
+        <span class="row-val" style="text-align:right;"><span style="color:var(--faint);">—</span> <span style="font-size:24px; font-weight:600; color:var(--accent);">82 steps</span> <span style="font-size:12px; color:var(--muted);">@ 4412 ms</span></span>
+      </div>
+
+      <div class="card" style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <span class="num" style="font-size:15.5px; font-weight:600; color:var(--primary);">dstar_lite<span class="role-tag">BASELINE</span></span>
+        <span class="row-val" style="text-align:right;"><span style="color:var(--faint);">—</span> <span style="font-size:24px; font-weight:600; color:var(--primary);">54 steps</span> <span style="font-size:12px; color:var(--muted);">@ 161 ms</span></span>
+      </div>
+
+      <div class="card" style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <span class="num" style="font-size:15.5px; font-weight:600; color:var(--primary);">cavr_nodetector<span class="role-tag">ABLATION · NO DETECTOR</span></span>
+        <span class="row-val" style="text-align:right;"><span style="color:var(--faint);">—</span> <span style="font-size:24px; font-weight:600; color:var(--primary);">130 steps</span> <span style="font-size:12px; color:var(--muted);">@ 2372 ms</span></span>
+      </div>
+
+      <div class="card" style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; border-left:2px solid var(--accent-amber);">
+        <span class="num" style="font-size:15.5px; font-weight:600; color:var(--primary);">cavr_fixedB<span class="role-tag amber">ABLATION · FIXED B=32</span></span>
+        <span class="row-val" style="text-align:right;"><span style="color:var(--faint);">—</span> <span style="font-size:24px; font-weight:600; color:var(--accent-amber);">399 steps</span> <span style="font-size:12px; color:var(--muted);">@ 3793 ms</span></span>
+      </div>
+
+      <div class="card-ghost" style="padding:16px 18px; margin-top:6px;">
+        <p style="margin:0; font-size:12.5px; line-height:1.68; color:var(--muted);">
+          Removing the detector doubles the delay; fixing the budget B=32 nearly quintuples it while spending the same compute — <span style="color:var(--primary);">the adaptive arbiter, not raw planning depth, is what buys fast recovery.</span>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Section 02 — Empirical Evidence</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="global.css">
+<style>
+  .giant-num{
+    position:absolute; right:88px; top:45%;
+    transform:translateY(-50%);
+    font-family:var(--font-num); font-weight:300;
+    font-size:236px; line-height:1; letter-spacing:-0.05em;
+    color:rgba(255,255,255,0.06);
+    user-select:none;
+  }
+  .sec-link{
+    font-family:var(--font-num); font-size:12.5px; letter-spacing:0.14em;
+    display:flex; align-items:center; gap:12px;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <!-- giant chapter numeral (decor) -->
+  <div class="giant-num" data-decor aria-hidden="true">02</div>
+
+  <!-- main title block -->
+  <div style="position:absolute; left:64px; top:0; height:100%; display:flex; flex-direction:column; justify-content:center; max-width:780px;">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span data-decor aria-hidden="true" style="width:28px; height:2px; background:var(--accent); display:inline-block;"></span>
+      <span class="kicker" style="color:var(--accent);">SECTION 02 / 03</span>
+    </div>
+    <h1 style="font-family:var(--font-heading); font-weight:600; font-size:80px; line-height:1.04; letter-spacing:-0.02em; margin:26px 0 0; color:var(--primary);">Empirical Evidence</h1>
+    <p style="margin:26px 0 0; max-width:600px; font-size:16.5px; line-height:1.7; color:var(--muted);">
+      Calibration, the 640-run pilot grid, and held-out verification — what actually happened when the mazes started moving.
+    </p>
+  </div>
+
+  <!-- bottom section progress -->
+  <div style="position:absolute; left:64px; right:64px; bottom:58px;">
+    <hr class="hair" style="margin:0 0 22px;">
+    <div style="display:flex; align-items:center; gap:56px;">
+      <div class="sec-link" style="color:var(--muted);"><span class="num">01</span><span>Problem &amp; Method</span></div>
+      <div class="sec-link" style="color:var(--accent);">
+        <span data-decor aria-hidden="true" style="width:8px; height:8px; background:var(--accent); border-radius:2px; display:inline-block;"></span>
+        <span class="num" style="font-weight:600;">02</span><span style="font-weight:600;">Empirical Evidence</span>
+      </div>
+      <div class="sec-link" style="color:var(--muted);"><span class="num">03</span><span>Deliverables &amp; Limits</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

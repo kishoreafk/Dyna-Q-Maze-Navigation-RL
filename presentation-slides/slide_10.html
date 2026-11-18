@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Learning curves &amp; per-condition table</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="global.css">
+<style>
+  table.cond th{ padding:5px 6px; font-size:9.5px; letter-spacing:0.1em; text-transform:none; }
+  table.cond td{ padding:7px 6px; font-size:11.5px; }
+  .ours-tag{
+    display:inline-block; margin-left:8px; padding:1px 7px 2px;
+    font-family:var(--font-num); font-size:9px; letter-spacing:0.14em;
+    color:var(--accent); border:1px solid rgba(45,212,167,0.45);
+    background:rgba(45,212,167,0.10); border-radius:999px; vertical-align:1px;
+  }
+</style>
+</head>
+<body>
+<div class="slide" style="padding:56px 64px 48px; display:flex; flex-direction:column;">
+
+  <!-- header -->
+  <header>
+    <div class="kicker">PILOT GRID</div>
+    <h1 style="font-family:var(--font-heading); font-size:34px; font-weight:600; letter-spacing:-0.015em; line-height:1.15; margin:10px 0 0; color:var(--primary);">Rolling success through a blocking event</h1>
+  </header>
+
+  <!-- content -->
+  <div style="flex:1; display:flex; gap:28px; margin-top:24px; min-height:0;">
+
+    <!-- LEFT: learning curves figure -->
+    <div style="width:640px; display:flex; flex-direction:column; justify-content:center; min-width:0;">
+      <div class="figframe">
+        <img src="fig_learning_curves.png" alt="Rolling success through a blocking event, all ten methods" style="display:block; width:100%; height:auto;">
+      </div>
+      <p style="margin:12px 4px 0; font-size:11.5px; line-height:1.6; color:var(--muted);">
+        Blocking, ρ=0.3: rolling success (window 8 episodes); dotted marker = topology change. All ten methods, same seeds.
+      </p>
+    </div>
+
+    <!-- RIGHT: per-condition table -->
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; min-width:0;">
+      <div class="card" style="padding:20px 20px 18px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span data-decor aria-hidden="true" style="width:8px; height:8px; background:var(--accent); border-radius:2px; display:inline-block;"></span>
+          <span style="font-family:var(--font-heading); font-size:17px; font-weight:600; color:var(--primary);">Blocking · ρ=0.3</span>
+        </div>
+        <table class="deck cond" style="margin-top:14px;">
+          <thead>
+            <tr><th>method</th><th style="text-align:right;">success</th><th style="text-align:right;">succ_post</th><th style="text-align:right;">delay_med</th><th style="text-align:right;">plan_ms</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hl">
+              <td class="rowhead" style="color:var(--accent); font-weight:600;">cavr<span class="ours-tag">OURS</span></td>
+              <td style="text-align:right;">0.445</td><td style="text-align:right;">0.616</td><td style="text-align:right; font-weight:600;">82</td><td style="text-align:right;">4412</td>
+            </tr>
+            <tr><td class="rowhead">dstar_lite</td><td style="text-align:right;">0.726</td><td style="text-align:right;">0.674</td><td style="text-align:right;">54</td><td style="text-align:right;">161</td></tr>
+            <tr><td class="rowhead">dirichlet_dyna</td><td style="text-align:right;">0.512</td><td style="text-align:right;">0.606</td><td style="text-align:right;">155</td><td style="text-align:right;">0</td></tr>
+            <tr><td class="rowhead">local_forgetting</td><td style="text-align:right;">0.479</td><td style="text-align:right;">0.590</td><td style="text-align:right;">152</td><td style="text-align:right;">0</td></tr>
+            <tr><td class="rowhead">dyna_q</td><td style="text-align:right;">0.404</td><td style="text-align:right;">0.491</td><td style="text-align:right;">113</td><td style="text-align:right;">0</td></tr>
+            <tr><td class="rowhead">q_learning</td><td style="text-align:right;">0.358</td><td style="text-align:right;">0.453</td><td style="text-align:right;">142</td><td style="text-align:right;">0</td></tr>
+          </tbody>
+        </table>
+        <hr class="hair" style="margin:14px 0 12px;">
+        <p style="margin:0; font-size:var(--fs-micro); line-height:1.6; color:var(--muted);">
+          D* Lite leads this condition — published as measured; CAVR trades planning wall-clock for model-based adaptation that needs no replanning oracle.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

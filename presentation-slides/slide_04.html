@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Method — five mechanisms</title>
+<link rel="stylesheet" href="global.css">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="slide" style="padding:56px 64px; display:flex; flex-direction:column;">
+
+  <!-- header -->
+  <div style="display:flex; align-items:center; gap:14px;">
+    <div style="width:26px; height:2px; background:var(--accent);"></div>
+    <div class="kicker">METHOD</div>
+  </div>
+  <h1 style="margin:16px 0 0; font-family:var(--font-heading); font-weight:600; font-size:38px; line-height:1.1; letter-spacing:-0.015em; color:var(--primary);">Five mechanisms, one repair loop</h1>
+
+  <!-- bento grid: 3 + 2 -->
+  <div style="flex:1; margin-top:26px; display:grid; grid-template-columns:repeat(6,1fr); grid-template-rows:1fr 1fr; gap:16px;">
+
+    <div class="card" style="grid-column:span 2; padding:22px 24px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="num" style="font-size:13px; color:var(--faint);">01</div>
+        <div style="flex:1; height:1px; background:var(--line);"></div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-heading); font-size:19px; font-weight:600; line-height:1.25; color:var(--primary);">Categorical Dirichlet model</div>
+      <div style="margin-top:10px; font-size:13px; line-height:1.6; color:var(--muted);">per-(s,a) outcome counts give expected transitions and rewards under slip; a factored edge-belief map tracks per-edge log-odds of being open.</div>
+    </div>
+
+    <div class="card" style="grid-column:span 2; padding:22px 24px; display:flex; flex-direction:column; border-color:rgba(45,212,167,0.45);">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="num" style="font-size:13px; color:var(--accent);">02</div>
+        <div style="flex:1; height:1px; background:rgba(45,212,167,0.25);"></div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-heading); font-size:19px; font-weight:600; line-height:1.25; color:var(--primary);">Calibrated CUSUM detector</div>
+      <div style="margin-top:10px; font-size:13px; line-height:1.6; color:var(--muted);">two-level change detection on the <span style="color:var(--primary); font-weight:600;">FROZEN</span> pre-update prediction; per-(s,a) alarms with false-alarm budget enforced by design.</div>
+    </div>
+
+    <div class="card" style="grid-column:span 2; padding:22px 24px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="num" style="font-size:13px; color:var(--faint);">03</div>
+        <div style="flex:1; height:1px; background:var(--line);"></div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-heading); font-size:19px; font-weight:600; line-height:1.25; color:var(--primary);">Repair: local forgetting</div>
+      <div style="margin-top:10px; font-size:13px; line-height:1.6; color:var(--muted);">on alarm, forget the affected model region (epoch bump) so stale experience stops poisoning planning.</div>
+    </div>
+
+    <div class="card" style="grid-column:span 3; padding:22px 24px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="num" style="font-size:13px; color:var(--faint);">04</div>
+        <div style="flex:1; height:1px; background:var(--line);"></div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-heading); font-size:19px; font-weight:600; line-height:1.25; color:var(--primary);">Counterfactual prioritized backups</div>
+      <div style="margin-top:10px; font-size:13px; line-height:1.6; color:var(--muted);">goal-conditioned expected value of each repair pushes backups through an epoch-versioned priority heap; stale entries invalidate automatically.</div>
+    </div>
+
+    <div class="card" style="grid-column:span 3; padding:22px 24px; display:flex; flex-direction:column; border-color:rgba(45,212,167,0.45);">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="num" style="font-size:13px; color:var(--accent);">05</div>
+        <div style="flex:1; height:1px; background:rgba(45,212,167,0.25);"></div>
+      </div>
+      <div style="margin-top:14px; font-family:var(--font-heading); font-size:19px; font-weight:600; line-height:1.25; color:var(--primary);">VoC budget + exploration floor</div>
+      <div style="margin-top:10px; font-size:13px; line-height:1.6; color:var(--muted);">value-of-computation-style arbiter picks the backup budget <span class="num" style="color:var(--primary);">B ∈ {0, 8, 16, 32, 64}</span>; a nonzero ε-floor keeps hidden shortcuts rediscoverable.</div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

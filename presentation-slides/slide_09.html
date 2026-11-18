@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Headline result — faster adaptation</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="global.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  .stat-label{ font-size:12.5px; line-height:1.6; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="slide" style="padding:56px 64px 48px; display:flex; flex-direction:column;">
+
+  <!-- header -->
+  <header>
+    <div class="kicker">HEADLINE RESULT</div>
+    <h1 style="font-family:var(--font-heading); font-size:34px; font-weight:600; letter-spacing:-0.015em; line-height:1.15; margin:10px 0 0; color:var(--primary);">CAVR cuts post-change adaptation delay by <span class="accent">47–52%</span></h1>
+  </header>
+
+  <!-- content -->
+  <div style="flex:1; display:flex; gap:28px; margin-top:24px; min-height:0;">
+
+    <!-- LEFT: stacked stat cards -->
+    <div style="width:430px; display:flex; flex-direction:column; gap:16px;">
+      <div class="card" style="flex:1.25; padding:22px 24px; display:flex; flex-direction:column; justify-content:center; border-left:2px solid var(--accent);">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="material-icons accent" style="font-size:26px;" aria-hidden="true">trending_down</span>
+          <span class="num" style="font-size:54px; font-weight:600; letter-spacing:-0.03em; line-height:1; color:var(--accent);">−47–52%</span>
+        </div>
+        <p class="stat-label" style="margin:14px 0 0;">median adaptation delay vs strongest Dyna baseline (local_forgetting) at ρ=0.3 — paired bootstrap CI excludes zero</p>
+      </div>
+
+      <div class="card" style="flex:1; padding:20px 24px; display:flex; flex-direction:column; justify-content:center;">
+        <div class="num" style="font-size:34px; font-weight:600; letter-spacing:-0.02em; line-height:1; color:var(--primary);">≤ 2.7 / 1000</div>
+        <p class="stat-label" style="margin:12px 0 0;">false alarms at ρ=0.3, inside the G1 budget of 5/1000</p>
+      </div>
+
+      <div class="card" style="flex:1; padding:20px 24px; display:flex; flex-direction:column; justify-content:center; border-left:2px solid var(--accent-amber);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="material-icons" style="font-size:22px; color:var(--accent-amber);" aria-hidden="true">error_outline</span>
+          <span class="num" style="font-size:34px; font-weight:600; letter-spacing:-0.02em; line-height:1; color:var(--accent-amber);">G2: PARTIAL</span>
+        </div>
+        <p class="stat-label" style="margin:12px 0 0;">a credible steady-state success cost remains — reported, not hidden</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: figure -->
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; min-width:0;">
+      <div class="figframe">
+        <img src="fig_adaptation_bar.png" alt="Median adaptation delay with 95% bootstrap CI, blocking and shortcut scenarios" style="display:block; width:100%; height:auto;">
+      </div>
+      <p style="margin:12px 4px 0; font-size:11.5px; line-height:1.6; color:var(--muted);">
+        Median adaptation delay with 95% bootstrap CI — blocking (left) and shortcut (right) scenarios; CAVR highlighted.
+      </p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

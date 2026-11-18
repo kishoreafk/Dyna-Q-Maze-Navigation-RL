@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The problem — navigation that changes under you</title>
+<link rel="stylesheet" href="global.css">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="slide" style="padding:56px 64px 42px; display:flex; flex-direction:column;">
+
+  <!-- header -->
+  <div style="display:flex; align-items:center; gap:14px;">
+    <div style="width:26px; height:2px; background:var(--accent);"></div>
+    <div class="kicker">PROBLEM STATEMENT</div>
+  </div>
+  <h1 style="margin:16px 0 0; font-family:var(--font-heading); font-weight:600; font-size:38px; line-height:1.1; letter-spacing:-0.015em; color:var(--primary);">Navigation that changes while you are learning it</h1>
+
+  <!-- body: paragraphs left · decorative 9×9 maze right -->
+  <div style="flex:1; display:flex; align-items:center; gap:40px;">
+    <div style="max-width:700px;">
+      <p style="margin:0; font-size:16px; line-height:1.75; color:var(--muted);">
+        The agent acts in a <strong style="color:var(--primary); font-weight:600;">9×9 grid maze</strong> formalized as an MDP <span class="num" style="color:var(--primary);">M = ⟨S, A, P, R, γ⟩</span>. Actions slip: with probability <span class="num" style="color:var(--primary);">1−ρ</span> the intended move executes, otherwise a uniformly random passable move — so even the transition table is stochastic before the world starts changing.
+      </p>
+      <p style="margin:22px 0 0; font-size:16px; line-height:1.75; color:var(--muted);">
+        <strong style="color:var(--primary); font-weight:600;">Topology then changes mid-run:</strong> edges get blocked or hidden shortcuts open at evaluator-chosen times, invisible to the agent (leak guard: only (s, a, r, s′) tuples are exposed). A Dyna agent that trusts its learned model keeps re-using stale experience precisely where the world moved — <strong style="color:var(--primary); font-weight:600;">adaptation delay explodes.</strong>
+      </p>
+    </div>
+    <div style="flex:1; display:flex; justify-content:center;">
+      <div data-decor aria-hidden="true" style="position:relative; width:225px; height:225px; flex:none;">
+        <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px); background-size:25px 25px;"></div>
+        <!-- corridor walls -->
+        <div style="position:absolute; left:50px; top:73px; width:125px; height:6px; background:rgba(255,255,255,0.17);"></div>
+        <div style="position:absolute; left:149px; top:123px; width:6px; height:77px; background:rgba(255,255,255,0.17);"></div>
+        <div style="position:absolute; left:25px; top:173px; width:100px; height:6px; background:rgba(255,255,255,0.17);"></div>
+        <div style="position:absolute; left:74px; top:25px; width:6px; height:49px; background:rgba(255,255,255,0.17);"></div>
+        <!-- goal / start cells -->
+        <div style="position:absolute; left:201px; top:1px; width:23px; height:23px; background:rgba(45,212,167,0.28);"></div>
+        <div style="position:absolute; left:1px; top:199px; width:23px; height:23px; background:rgba(45,212,167,0.42); box-shadow:0 0 16px rgba(45,212,167,0.35);"></div>
+        <!-- changed region (amber = change marker) -->
+        <div style="position:absolute; left:126px; top:76px; width:23px; height:23px; background:rgba(245,183,74,0.45);"></div>
+        <div style="position:absolute; left:126px; top:101px; width:23px; height:23px; background:rgba(245,183,74,0.45);"></div>
+        <div style="position:absolute; left:120px; top:70px; width:60px; height:60px; border:1px dashed rgba(245,183,74,0.55); border-radius:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- stat trio -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+    <div class="card" style="padding:20px 24px;">
+      <div style="height:52px; display:flex; align-items:flex-end;">
+        <div class="num" style="font-size:24px; line-height:1; color:var(--primary);">ρ ∈ {0, 0.1, 0.3}</div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:var(--muted);">action slip levels evaluated</div>
+    </div>
+    <div class="card" style="padding:20px 24px;">
+      <div style="height:52px; display:flex; align-items:flex-end;">
+        <div class="num" style="font-size:18px; line-height:1.15; color:var(--primary);">{blocking, shortcut, static}</div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:var(--muted);">change scenarios</div>
+    </div>
+    <div class="card" style="padding:20px 24px;">
+      <div style="height:52px; display:flex; align-items:flex-end;">
+        <div class="num" style="font-size:46px; line-height:0.9; color:var(--accent);">640</div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:var(--muted);">pilot runs · 8 map/seed pairs</div>
+    </div>
+  </div>
+
+  <!-- measurement note -->
+  <div class="num" style="margin-top:14px; font-size:var(--fs-micro); color:var(--faint); letter-spacing:0.04em;">Success measured post-change; adaptation delay = steps until rolling success recovers, censoring-aware.</div>
+
+</div>
+</body>
+</html>

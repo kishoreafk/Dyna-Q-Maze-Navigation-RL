@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+:root {
+  /* palette — Nexus dark research deck */
+  --bg: #06070b;
+  --bg-raise: #0c0e14;
+  --primary: #f2f4f8;
+  --muted: #9aa1ad;
+  --faint: #5b616c;
+  --accent: #2dd4a7;      /* signal teal — used for PASS/highlight data */
+  --accent-amber: #f5b74a; /* alarm amber — used for change/slip markers */
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.22);
+
+  /* typography tokens */
+  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-num: 'IBM Plex Mono', monospace;
+  --fs-display: 64px;
+  --fs-h1: 40px;
+  --fs-h2: 26px;
+  --fs-h3: 17px;
+  --fs-body: 14.5px;
+  --fs-small: 12px;
+  --fs-micro: 10.5px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #101014;
+}
+
+.slide {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--primary);
+  font-family: var(--font-body);
+}
+
+/* subtle radial glow + grid texture for depth */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 900px 480px at 50% -10%, rgba(45, 212, 167, 0.07), transparent 60%),
+    radial-gradient(ellipse 700px 420px at 100% 110%, rgba(255, 255, 255, 0.035), transparent 60%);
+  pointer-events: none;
+}
+.slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.slide > * { position: relative; z-index: 1; }
+
+/* surfaces */
+.card {
+  background: var(--bg-raise);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.card-ghost {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--line-strong);
+  border-radius: 14px;
+}
+
+.kicker {
+  font-family: var(--font-num);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+
+.accent { color: var(--accent); }
+.amber { color: var(--accent-amber); }
+.mutedc { color: var(--muted); }
+
+.hair { background: var(--line); height: 1px; border: 0; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  font-family: var(--font-num);
+}
+
+.figframe {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid var(--line);
+}
+
+.badge-pass {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-num);
+  font-size: var(--fs-small);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  border: 1px solid rgba(45, 212, 167, 0.35);
+  background: rgba(45, 212, 167, 0.08);
+  border-radius: 999px;
+  padding: 6px 16px;
+}
+
+table.deck { border-collapse: collapse; width: 100%; }
+table.deck th {
+  font-family: var(--font-num);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line-strong);
+  font-weight: 500;
+}
+table.deck td {
+  font-size: var(--fs-small);
+  color: var(--muted);
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+table.deck td.rowhead { font-family: var(--font-body); color: var(--primary); }
+tr.hl td { color: var(--primary); background: rgba(255, 255, 255, 0.045); }

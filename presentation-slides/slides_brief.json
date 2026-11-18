@@ -1,0 +1,111 @@
+{
+  "design": {
+    "title": "CAVR-Dyna — Change-Aware Stochastic Model-Based RL for Dynamic Mazes",
+    "style_name": "Nexus dark research deck",
+    "palette": { "background": "#06070b", "primary": "#f2f4f8", "accent": "#2dd4a7" },
+    "typography": { "heading": "Space Grotesk", "body": "Inter", "numeric": "IBM Plex Mono" },
+    "reference": "Linear/Apple dark keynote × research lab console"
+  },
+  "global_css_path": "/home/z/my-project/download/slides/global.css",
+  "slides_dir": "/home/z/my-project/download/slides",
+  "language": "en",
+  "speaker_notes": "none",
+  "slides": [
+    {
+      "title": "Cover",
+      "layout": "cover",
+      "output_path": "/home/z/my-project/download/slides/slide_01.html",
+      "task_brief": "Cover slide. Kicker line: 'RESEARCH CONSOLE // MODEL-BASED REINFORCEMENT LEARNING'. Main title (display size, Space Grotesk, two lines): 'CAVR-Dyna' with a thin-weight second line 'Change-Aware Stochastic Model-Based RL for Dynamic Mazes'. Sub-paragraph (muted, max-width 640px): 'A Dyna-style tabular agent that learns a categorical Dirichlet transition model and a factored edge-belief map under action slip, detects topology changes with a calibrated CUSUM on the frozen pre-update prediction, and repairs by counterfactual prioritized backups under a value-of-computation budget. Hypothesis evaluated empirically — every number in this deck comes from actually executed runs.' Three chips: 'Tabular Dyna · CPU-only', '9×9 dynamic mazes', 'ρ slip ∈ {0, 0.1, 0.3}'. One badge-pass pill: 'HELD-OUT VERIFICATION V1–V4: PASS'. Bottom-left footer row (micro, faint): 'CAVR-DYNA / 2026 — RESEARCH ARTIFACTS · 640 RUNS · 41 TESTS'. Keep the composition airy and centered-left; no photos."
+    },
+    {
+      "title": "Section 01 — Problem & Method",
+      "layout": "section header",
+      "output_path": "/home/z/my-project/download/slides/slide_02.html",
+      "task_brief": "Section divider. Giant faint chapter numeral '01' (font-num, ~200px, color rgba(255,255,255,0.06)) positioned right side. Kicker: 'SECTION 01 / 03'. Title (h1): 'Problem & Method'. Tagline (muted, one sentence): 'Why classical Dyna breaks the moment the maze changes — and the five mechanisms CAVR-Dyna adds to survive it.' Small progress dots or hairline list of the three sections at bottom: 01 Problem & Method (highlighted, accent), 02 Empirical Evidence, 03 Deliverables & Limits."
+    },
+    {
+      "title": "The problem: navigation that changes under you",
+      "layout": "split text+stat trio",
+      "output_path": "/home/z/my-project/download/slides/slide_03.html",
+      "task_brief": "Kicker: 'PROBLEM STATEMENT'. Title: 'Navigation that changes while you are learning it'. Left column body (two paragraphs, verbatim): (1) 'The agent acts in a 9×9 grid maze formalized as an MDP M = ⟨S, A, P, R, γ⟩. Actions slip: with probability 1−ρ the intended move executes, otherwise a uniformly random passable move — so even the transition table is stochastic before the world starts changing.' (2) 'Topology then changes mid-run: edges get blocked or hidden shortcuts open at evaluator-chosen times, invisible to the agent (leak guard: only (s, a, r, s′) tuples are exposed). A Dyna agent that trusts its learned model keeps re-using stale experience precisely where the world moved — adaptation delay explodes.' Three stat cards across the bottom (num font, big value + label): 'ρ ∈ {0, 0.1, 0.3}' / 'action slip levels evaluated', '{blocking, shortcut, static}' / 'change scenarios', '640' / 'pilot runs · 8 map/seed pairs'. Add a small note line (micro, faint): 'Success measured post-change; adaptation delay = steps until rolling success recovers, censoring-aware.'"
+    },
+    {
+      "title": "Method: five mechanisms",
+      "layout": "bento grid",
+      "output_path": "/home/z/my-project/download/slides/slide_04.html",
+      "task_brief": "Kicker: 'METHOD'. Title: 'Five mechanisms, one repair loop'. Bento grid of five cards (2 rows: 3 + 2), each with a num-font index, bold name, and 2-line description (verbatim): (1) 'Categorical Dirichlet model — per-(s,a) outcome counts give expected transitions and rewards under slip; a factored edge-belief map tracks per-edge log-odds of being open.' (2) 'Calibrated CUSUM detector — two-level change detection on the FROZEN pre-update prediction; per-(s,a) alarms with false-alarm budget enforced by design.' (3) 'Repair: local forgetting — on alarm, forget the affected model region (epoch bump) so stale experience stops poisoning planning.' (4) 'Counterfactual prioritized backups — goal-conditioned expected value of each repair pushes backups through an epoch-versioned priority heap; stale entries invalidate automatically.' (5) 'VoC budget + exploration floor — value-of-computation-style arbiter picks the backup budget B ∈ {0, 8, 16, 32, 64}; a nonzero ε-floor keeps hidden shortcuts rediscoverable.' Accent-highlight card 2 (detector) and card 5 (budget) borders subtly with --accent."
+    },
+    {
+      "title": "System architecture",
+      "layout": "layered pipeline (native HTML boxes)",
+      "output_path": "/home/z/my-project/download/slides/slide_05.html",
+      "task_brief": "Kicker: 'ARCHITECTURE'. Title: 'From environment to verified artifacts'. Build a layered pipeline with native HTML boxes (NO SVG, NO images): five horizontal layer rows, each = a layer label chip on the left + 2–4 boxes on the right, separated by small ▼ arrow glyphs (styled divs). LAYER 'Environment': boxes '9×9 procedural maze — DFS spanning tree + braiding 0.15, SHA256 manifest', 'Slip dynamics ρ', 'Change scenarios (hidden schedule)', 'Leak guard — only (s,a,r,s′) exposed'. LAYER 'Models': 'Categorical Dirichlet model', 'Factored edge-belief map', 'Two-level CUSUM detector'. LAYER 'CAVR agent': 'Repair on alarm (epoch bump)', 'Counterfactual backups', 'Probe schedule (min gap 8)', 'Exploration floor'. LAYER 'Planning': 'Epoch-versioned heap', 'VoC budget arbiter B∈{0,8,16,32,64}', 'D* Lite retest every 50 steps'. LAYER 'Evaluation': 'Metrics (delay, FAR, AULC, regret)', 'Paired bootstrap statistics', 'Held-out V1–V4 gates'. Boxes: card class, compact, font sizes --fs-small/--fs-micro; layer labels use kicker style in accent color. This slide is dense — keep paddings tight so everything fits 720px height."
+    },
+    {
+      "title": "Design: modules & frozen hyperparameters",
+      "layout": "two-column table",
+      "output_path": "/home/z/my-project/download/slides/slide_06.html",
+      "task_brief": "Kicker: 'SOFTWARE DESIGN'. Title: 'Module inventory and frozen configuration'. Left card: table.deck 'Module / Responsibility' rows (verbatim): 'envs/ — grid env, maze gen, change scenarios'; 'models/ — Dirichlet model, edge beliefs, episodic map, CUSUM detector'; 'agents/ — q_learning, dyna_q(+), prioritized sweeping, stochastic dyna, dstar_lite, cavr (+ 2 ablations)'; 'planning/ — versioned heap, counterfactual, probes, budget'; 'evaluation/ — runner, metrics, statistics, oracles, calibration'; 'tests/ — 41 unit tests'. Right card: table.deck 'Hyperparameter / Value' rows (from checkpoint agent_cfg, verbatim): 'α (learning rate) — 0.1', 'α_model — 0.15', 'γ (discount) — 0.97', 'ε (exploration floor) — 0.1', 'Dyna n — 20', 'local-forgetting n — 32', 'budget cap — 64', 'CUSUM h — 4.0', 'drift κ — 0.0003', 'probe θ_probe — 0.12'. Footer note (micro): 'Seeds fixed per manifest; procedural mazes are content-hashed (SHA256) so any run can be reproduced bit-for-bit.'"
+    },
+    {
+      "title": "Section 02 — Empirical Evidence",
+      "layout": "section header",
+      "output_path": "/home/z/my-project/download/slides/slide_07.html",
+      "task_brief": "Section divider, same family as slide 2. Giant faint numeral '02' right side. Kicker: 'SECTION 02 / 03'. Title: 'Empirical Evidence'. Tagline: 'Calibration, the 640-run pilot grid, and held-out verification — what actually happened when the mazes started moving.' Bottom section list: 01 Problem & Method (muted), 02 Empirical Evidence (highlighted accent), 03 Deliverables & Limits (muted)."
+    },
+    {
+      "title": "Protocol & calibration",
+      "layout": "split: protocol text + calibration tables",
+      "output_path": "/home/z/my-project/download/slides/slide_08.html",
+      "task_brief": "Kicker: 'EXPERIMENTAL PROTOCOL'. Title: 'Calibrate first, then compare ten methods'. Left column card, body verbatim: 'Before any comparison, the detector is calibrated on validation mazes (seeds 1004–1007, disjoint from training seeds 1000–1003): the CUSUM threshold h sets the false-alarm budget, and the repair gain κ sets how aggressively counters are re-armed after an alarm. Both are chosen from measured grids, not heuristics.' Below: two compact table.deck tables. Table A 'CUSUM threshold grid' rows verbatim: h=3.0 → FA/1000 5.63; h=4.0 → 2.50 (highlight row, accent, label 'chosen'); h=5.0 → 0.83; h=6.0 → 0.42; h=8.0 → 0.00; h=10.0 → 0.00. Table B 'Repair gain κ grid': κ=0.0003 → mean delay 498 (highlight 'chosen'); κ=0.001 → 510.5; κ=0.003 → 750. Right column: a 'chosen configuration' card with badge-pass 'h = 4.0 — ≤ 2.5 false alarms / 1000 steps' and 'κ = 0.0003 — fastest mean repair delay', plus a short paragraph (verbatim): 'The full grid then compares 10 methods across 8 conditions — {blocking, shortcut, static} × ρ ∈ {0, 0.1, 0.3} — over 8 map/seed pairs: CAVR, two CAVR ablations (no-detector, fixed budget B=32), D* Lite, Dirichlet Dyna, local-forgetting Dyna, Dyna-Q, Dyna-Q+, prioritized sweeping and Q-learning, with paired bootstrap confidence intervals across pairs.'"
+    },
+    {
+      "title": "Headline result: faster adaptation",
+      "layout": "stat block + figure",
+      "output_path": "/home/z/my-project/download/slides/slide_09.html",
+      "task_brief": "Kicker: 'HEADLINE RESULT'. Title: 'CAVR cuts post-change adaptation delay by 47–52%'. Left: three stacked stat cards (verbatim numbers): '−47–52%' / 'median adaptation delay vs strongest Dyna baseline (local_forgetting) at ρ=0.3 — paired bootstrap CI excludes zero'; '≤ 2.7 / 1000' / 'false alarms at ρ=0.3, inside the G1 budget of 5/1000'; 'G2: PARTIAL' (amber) / 'a credible steady-state success cost remains — reported, not hidden'. Right: figframe image 'fig_adaptation_bar.png' (relative path, white card frame) with caption (micro, muted): 'Median adaptation delay with 95% bootstrap CI — blocking (left) and shortcut (right) scenarios; CAVR highlighted.'"
+    },
+    {
+      "title": "Learning curves & per-condition table",
+      "layout": "figure + compact table",
+      "output_path": "/home/z/my-project/download/slides/slide_10.html",
+      "task_brief": "Kicker: 'PILOT GRID'. Title: 'Rolling success through a blocking event'. Left (wide): figframe image 'fig_learning_curves.png' (relative path) caption: 'Blocking, ρ=0.3: rolling success (window 8 episodes); dotted marker = topology change. All ten methods, same seeds.' Right: compact table.deck titled 'Blocking · ρ=0.3' with rows verbatim (method / success / succ_post / delay_med / plan_ms): cavr 0.445 0.616 82 4412 (highlight); dstar_lite 0.726 0.674 54 161; dirichlet_dyna 0.512 0.606 155 0; local_forgetting 0.479 0.590 152 0; dyna_q 0.404 0.491 113 0; q_learning 0.358 0.453 142 0. Footer note (micro): 'D* Lite leads this condition — published as measured; CAVR trades planning wall-clock for model-based adaptation that needs no replanning oracle.'"
+    },
+    {
+      "title": "Compute vs adaptation",
+      "layout": "figure + stat pair",
+      "output_path": "/home/z/my-project/download/slides/slide_11.html",
+      "task_brief": "Kicker: 'TRADE-OFF'. Title: 'Compute buys adaptation — the Pareto view'. Left: figframe image 'fig_pareto.png' (relative path) caption: 'Blocking, ρ=0.3: median post-change adaptation delay vs mean planning wall-clock per run (log scale).' Right: four num-font stat rows (verbatim): 'cavr — 82 steps @ 4412 ms', 'dstar_lite — 54 steps @ 161 ms', 'cavr_nodetector — 130 steps @ 2372 ms', 'cavr_fixedB — 399 steps @ 3793 ms'. Below, one short paragraph (verbatim): 'Removing the detector doubles the delay; fixing the budget B=32 nearly quintuples it while spending the same compute — the adaptive arbiter, not raw planning depth, is what buys fast recovery.'"
+    },
+    {
+      "title": "Detector behaviour",
+      "layout": "figure + text",
+      "output_path": "/home/z/my-project/download/slides/slide_12.html",
+      "task_brief": "Kicker: 'CHANGE DETECTION'. Title: 'Alarms stay rare — and fire when it matters'. Left: figframe image 'fig_detector.png' (relative path) caption: 'Left: false alarms per 1000 stationary steps vs slip ρ (dashed = G1 budget 5/1000). Right: mean detection delay on changed runs.' Right column body verbatim: 'On stationary runs the calibrated CUSUM stays within budget at every slip level — 0.8 FA/1000 at ρ=0.1 rising to 1.5 at ρ=0.3, against the 5/1000 ceiling. On changed runs it localizes the break: mean detection delay ≈ 70 steps at ρ=0.3. Alarms are computed on the frozen pre-update prediction, so the detector cannot hide its own learning signal.' Add two chip pills: '0.8 FA/1000 @ ρ=0.1' and '≈70 steps detection @ ρ=0.3'."
+    },
+    {
+      "title": "Held-out verification: V1–V4 PASS",
+      "layout": "badges + table",
+      "output_path": "/home/z/my-project/download/slides/slide_13.html",
+      "task_brief": "Kicker: 'VERIFICATION'. Title: 'Trained weights verified on unseen schedules'. Top row: four badge-pass pills verbatim: 'V1 stationarity + success — PASS', 'V2 adaptation — PASS', 'V3 model sanity — PASS', 'V4 determinism — PASS'. Table.deck 'Held-out runs (verify slip ρ=0.3, unseen edge/time schedules)' columns maze / static success / adaptation delay / alarms / max|Σp−1| rows verbatim: 1000 — 1.00 — 503 — 6 — 2.22e-16; 1001 — 1.00 — 11 — 9 — 2.22e-16; 1002 — 0.97 — 6 — 7 — 2.22e-16; 1003 — 1.00 — 44 — 7 — 2.22e-16. Footer paragraph verbatim: 'Verification re-runs the saved checkpoints under NEW schedules chosen by the evaluator at a harsher slip (0.3 vs 0.1 in training). All four gates pass; model probabilities sum to machine precision and reloaded weights replay bit-identically.'"
+    },
+    {
+      "title": "Section 03 — honest limits",
+      "layout": "section header (compact)",
+      "output_path": "/home/z/my-project/download/slides/slide_14.html",
+      "task_brief": "Section divider, same family. Giant faint numeral '03' right side. Kicker: 'SECTION 03 / 03'. Title: 'Deliverables & Honest Limits'. Tagline: 'What shipped, what the evidence supports — and where CAVR does not win.' Bottom section list: 01 Problem & Method, 02 Empirical Evidence (muted), 03 Deliverables & Limits (highlighted accent)."
+    },
+    {
+      "title": "Honest limits & known defects",
+      "layout": "split: limits list + belief heatmap figure",
+      "output_path": "/home/z/my-project/download/slides/slide_15.html",
+      "task_brief": "Kicker: 'LIMITATIONS'. Title: 'What the evidence does not support (yet)'. Left: three numbered limit cards (verbatim): (1) 'Steady-state cost — CAVR pays a credible success-rate cost once the world is static again (G2 verdict PARTIAL): e.g. blocking ρ=0.3 success 0.445 vs D* Lite 0.726.' (2) 'D* Lite wins several regimes — with a true map oracle it is faster and near-perfect; CAVR is the right tool only when walls must be learned, not given.' (3) 'Belief-map blind spots — under MAP beliefs two of 81 cells stay unreachable from the start after the blocking event; the detector repairs visited corridors, not every pocket.' Right: figframe image 'fig_belief_heatmap.png' (relative path) caption verbatim: 'Learned edge-open beliefs for maze 1000. The left evaluator-view panel renders blank in the shipped artifact — a known plotting defect we ship as-is rather than disguise.'"
+    },
+    {
+      "title": "Deliverables & closing",
+      "layout": "closing with screenshot + deliverable grid",
+      "output_path": "/home/z/my-project/download/slides/slide_16.html",
+      "task_brief": "Kicker: 'DELIVERABLES'. Title: 'Everything ships — verified end to end'. Left: dark screenshot image 'console_overview.png' (relative path; render inside a card with 1px border, slight rounded corners, keep dark) caption: 'Integrated web console: gateway login → artifacts dashboard with live maze replay.' Right: compact deliverable grid (6 mini-cards, num index, verbatim): 'D1 — Source repository (src/cavr: envs, models, agents, planning, evaluation)', 'D2 — Trained checkpoints (.npz ×5 + per-run pilot weights)', 'D3 — Evaluation report (640-run metrics, 8 figures, 8 condition tables)', 'D4 — Technical report (this deck + written report)', 'D5 — Reproducibility package (configs, SHA256 manifest, seeds)', 'D6 — Interactive demo console (gateway + dashboard + replay)', 'D7 — Test suite (41 pytest cases)'. Bottom closing line (h3, primary): 'CAVR-Dyna — change-aware, budget-honest, and verified against the world it claims to model.' Footer (micro, faint): 'MIT-licensed code and artifacts · 640 runs · 8 figures · 41 tests · V1–V4 PASS'."
+    }
+  ]
+}
